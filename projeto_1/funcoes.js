@@ -28,23 +28,39 @@ function lerArquivos(caminhos) {
     return Promise.all(caminhos.map(caminho => lerArquivo(caminho)))
 }
 
-function elementosTerminadosCom(array, padraoTextual) {
-    return array.filter(elem => elem.endsWith(padraoTextual))
+function elementosTerminadosCom(padraoTextual) {
+    return function (array) {
+        return array.filter(elem => elem.endsWith(padraoTextual))
+    }
 }
 
-function removerSeVazio(array) {
+function removerElementosSeVazio(array) {
     return array.filter(elem => elem.trim())
 }
 
-function removerSeIncluir(array, padraoTextual) {
-    return array.filter(elem => !elem.includes(padraoTextual))
+function removerElementosSeIncluir(padraoTextual) {
+    return function (array) {
+        return array.filter(elem => !elem.includes(padraoTextual))
+    }
 }
 
-function removerSeApenasNumero(array) {
+function removerElementosSeApenasNumero(array) {
     return array.filter(elem => {
         const num = parseInt(elem.trim())
         return num !== num
     })
+}
+
+function removerSimbolos(simbolos) {
+    return function (array) {
+        return array.map(elem => {
+            let textoSemSimbolos = elem
+            simbolos.forEach(simbolo => {
+                textoSemSimbolos = textoSemSimbolos.split(simbolo).join('')
+            });
+            return textoSemSimbolos
+        })
+    }
 }
 
 module.exports = {
@@ -52,7 +68,8 @@ module.exports = {
     elementosTerminadosCom,
     lerArquivo,
     lerArquivos,
-    removerSeVazio,
-    removerSeIncluir,
-    removerSeApenasNumero
+    removerElementosSeVazio,
+    removerElementosSeIncluir,
+    removerElementosSeApenasNumero,
+    removerSimbolos
 }
