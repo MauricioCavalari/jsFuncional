@@ -9,10 +9,6 @@ const simbolos = [
     '(', ')'
 ]
 
-function agruparPalavras() {
-
-}
-
 fn.lerDiretorio(caminho)
     .then(fn.elementosTerminadosCom('.srt'))
     .then(fn.lerArquivos)
@@ -25,4 +21,6 @@ fn.lerDiretorio(caminho)
     .then(fn.mesclarElementos)
     .then(fn.separarTextoPor(' '))
     .then(fn.removerElementosSeVazio)
+    .then(fn.agruparPalavras)
+    .then(fn.ordernarPorNumerico('qtde', 'desc'))
     .then(console.log)
